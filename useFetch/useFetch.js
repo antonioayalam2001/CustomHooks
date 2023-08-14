@@ -9,7 +9,7 @@ export const useFetch = (url) => {
 
             setData({ ...data, isLoading: true });
             try {
-                  const response = await fetch(url);
+                  const response = await fetch(url, { signal: abortController.signal });
                   const urlData = await response.json();
                   console.log(urlData)
                   setData({ ...data, isLoading: false, data: urlData });
@@ -28,7 +28,7 @@ export const useFetch = (url) => {
             // Para cancelar la peticion
             const abortController = new AbortController();
             setAbortController(abortController);
-            getInformation();
+            getInformation(); 
             //Cuando el componente se desmonte se cancela la peticion
             return () => abortController.abort();
       }, [url]);
